@@ -1,0 +1,34 @@
+{
+  "name": "readme-loader",
+  "version": "0.0.1",
+  "author": "Craig Mulligan @craig-mulligan",
+  "description": "README loader module for webpack",
+  "main": "index.js",
+  "dependencies": {
+    "fastparse": "^1.1.1",
+    "loader-utils": "^0.2.15",
+    "markdown-it": "8.2.2",
+    "object-assign": "^4.1.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "6.22.1",
+    "babel-loader": "6.2.10",
+    "eslint": "^3.1.1",
+    "js-beautify": "^1.6.3",
+    "mocha": "^2.5.3",
+    "should": "^10.0.0"
+  },
+  "scripts": {
+    "test": "mocha --harmony --full-trace --check-leaks",
+    "travis": "npm run cover -- --report lcovonly",
+    "lint": "eslint lib bin hot",
+    "postcover": "npm run lint && npm run beautify-lint",
+    "cover": "istanbul cover -x *.runtime.js node_modules/mocha/bin/_mocha",
+    "publish-patch": "npm run lint && mocha && npm version patch && git push && git push --tags && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:craig-mulligan/readme-loader.git"
+  }
+}
