@@ -8,7 +8,7 @@ const md = require('./lib/md');
 const loaderUtils = require('loader-utils');
 const helpers = require('./lib/helpers');
 const filter = require("lodash/filter");
-const _ = require('lodash');
+const _ = require('./lib/lodash');
 
 /**
 * @summary Parses a readme source into object
@@ -27,48 +27,40 @@ const _ = require('lodash');
 */
 
 function getLoaderConfig(context) {
-	const query = loaderUtils.parseQuery(context.query);
-	const configKey = query.config || 'readmeLoader';
-	const config = context.options && context.options.hasOwnProperty(configKey) ? context.options[configKey] : {};
+  const query = loaderUtils.parseQuery(context.query);
+  const configKey = query.config || 'readmeLoader';
+  const config = context.options && context.options.hasOwnProperty(configKey) ? context.options[configKey] : {};
 
-	delete query.config;
+  delete query.config;
 
-	return Object.assign(query, config);
+  return Object.assign(query, config);
 }
 
 
 module.exports = function(source) {
   const query = loaderUtils.parseQuery(this.query);
-	this.cacheable();
-	const config = getLoaderConfig(this);
+  this.cacheable();
+  const config = getLoaderConfig(this);
   const tree = md.parse(source, {});
 
   const obj = {
     title: (tokens => {
-      return _(tokens)
-  			.filter((t, i) => {
-  				// if previous token was h*
-          return helpers.typeIs(tokens[i - 1], 'heading_open');
-        })
-        .pullAt(0)
-        .map(token => {
-          if (!helpers.containsBadge(token)) {
-            return token
-          }
-          return helpers.stripBadge(token);
-        })
+      return(
+      _(tokens)
+        .filterByType('heading')
+        .stripBadges()
         .head()
-  			.content;
-		})(tree),
+        .content
+      );
+    })(tree),
     lead: (tokens => {
-		  return _(tokens)
-			.filter((t, i) => {
-				// if previous token was paragraph_open
-				// console.log(helpers.containsBadge(t));
-			  return helpers.typeIs(tokens[i - 1], 'paragraph_open') && !helpers.containsBadge(t);
-      })
-      .head()
-			.content;
+      return(
+      _(tokens)
+        .filterByType('paragraph')
+        .stripBadges()
+        .head()
+        .content
+      );
     })(tree)
   };
 
