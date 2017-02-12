@@ -61,6 +61,15 @@ module.exports = function(source) {
         .head()
         .content
       )
+    )(tree),
+    badges: (tokens => (
+      _(tokens)
+        .filterByType('paragraph')
+        .filter(!helpers.containsBadge)
+        .clean()
+        .head()
+        .content
+      )
     )(tree)
   };
 
