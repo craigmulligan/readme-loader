@@ -44,24 +44,22 @@ module.exports = function(source) {
   const tree = md.parse(source, {});
 
   const obj = {
-    title: (tokens => {
-      return(
+    title: (tokens => (
       _(tokens)
         .filterByType('heading')
         .stripBadges()
         .head()
         .content
-      );
-    })(tree),
-    lead: (tokens => {
-      return(
+      )
+    )(tree),
+    lead: (tokens => (
       _(tokens)
         .filterByType('paragraph')
         .stripBadges()
         .head()
         .content
-      );
-    })(tree)
+      )
+    )(tree)
   };
 
   console.log(JSON.stringify(obj, null, 2));
