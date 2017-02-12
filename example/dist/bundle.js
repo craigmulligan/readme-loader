@@ -97,25 +97,25 @@ webpackContext.id = 0;
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = {"title":"Enzyme","lead":"To get started with enzyme, you can simply install it with npm:"}
+module.exports = {}
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = {"title":"Etcher","lead":"Flash OS images to SD cards & USB drives, safely and easily."}
+module.exports = {}
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = {"title":"Jest","lead":"🃏 Painless JavaScript Testing"}
+module.exports = {}
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = {"title":"[React](https://facebook.github.io/react/) &middot; [![CircleCI Status](https://circleci.com/gh/facebook/react.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/facebook/react) [![Build Status](https://img.shields.io/travis/facebook/react/master.svg?style=flat)](https://travis-ci.org/facebook/react) [![Coverage Status](https://img.shields.io/coveralls/facebook/react/master.svg?style=flat)](https://coveralls.io/github/facebook/react?branch=master) [![npm version](https://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/react) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#pull-requests)","lead":"React is a JavaScript library for building user interfaces."}
+module.exports = {}
 
 /***/ }),
 /* 5 */
