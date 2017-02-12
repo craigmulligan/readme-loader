@@ -47,10 +47,18 @@ module.exports = function(source) {
     title: (tokens => (
       _(tokens)
         .filterByType('heading')
-        .stripBadges()
+        // .stripBadges()
         .clean()
         .head()
-        .content
+        .getContent()
+      )
+    )(tree),
+    badges: (tokens => (
+      _(tokens)
+        .filterByType('paragraph')
+        .filter(helpers.containsBadge)
+        .head()
+        .getContent()
       )
     )(tree),
     lead: (tokens => (
@@ -59,18 +67,9 @@ module.exports = function(source) {
         .stripBadges()
         .clean()
         .head()
-        .content
+        .getContent()
       )
     )(tree),
-    badges: (tokens => (
-      _(tokens)
-        .filterByType('paragraph')
-        .filter(!helpers.containsBadge)
-        .clean()
-        .head()
-        .content
-      )
-    )(tree)
   };
 
   console.log(JSON.stringify(obj, null, 2));
