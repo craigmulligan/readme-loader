@@ -48,6 +48,7 @@ module.exports = function(source) {
       _(tokens)
         .filterByType('heading')
         .stripBadges()
+        .clean()
         .head()
         .content
       )
@@ -56,6 +57,7 @@ module.exports = function(source) {
       _(tokens)
         .filterByType('paragraph')
         .stripBadges()
+        .clean()
         .head()
         .content
       )
