@@ -47,7 +47,7 @@ module.exports = function(source) {
     title: (tokens => (
       _(tokens)
         .filterByType('heading')
-        .filter((t) => (!helpers.containsBadge(t)))
+        .filter(t => !helpers.containsBadge(t))
         .head()
         .content
       )
@@ -55,7 +55,7 @@ module.exports = function(source) {
     lead: (tokens => (
       _(tokens)
         .filterByType('paragraph')
-        .filter((t) => (!helpers.containsBadge(t)))
+        .filter(t => !helpers.containsBadge(t))
         .head()
         .content
       )
@@ -64,7 +64,7 @@ module.exports = function(source) {
       _(tokens)
         .filterByType('paragraph')
         .filter(helpers.containsBadge)
-        .map((t) => t.content)
+        .map(t => t.content)
         .join('')
       )
     )(_.cloneDeep(tree)),
