@@ -47,29 +47,27 @@ module.exports = function(source) {
     title: (tokens => (
       _(tokens)
         .filterByType('heading')
-        // .stripBadges()
-        .clean()
+        .filter((t) => (!helpers.containsBadge(t)))
         .head()
-        .getContent()
+        .content
       )
-    )(tree),
+    )(_.cloneDeep(tree)),
+    lead: (tokens => (
+      _(tokens)
+        .filterByType('paragraph')
+        .filter((t) => (!helpers.containsBadge(t)))
+        .head()
+        .content
+      )
+    )(_.cloneDeep(tree)),
     badges: (tokens => (
       _(tokens)
         .filterByType('paragraph')
         .filter(helpers.containsBadge)
-        .head()
-        .getContent()
+        .map((t) => t.content)
+        .join('')
       )
-    )(tree),
-    lead: (tokens => (
-      _(tokens)
-        .filterByType('paragraph')
-        .stripBadges()
-        .clean()
-        .head()
-        .getContent()
-      )
-    )(tree),
+    )(_.cloneDeep(tree)),
   };
 
   console.log(JSON.stringify(obj, null, 2));
