@@ -44,24 +44,30 @@ module.exports = function(source) {
   const tree = md.parse(source, {});
 
   const obj = {
-    title: (tokens => {
-      return(
+    title: (tokens => (
       _(tokens)
         .filterByType('heading')
-        .stripBadges()
+        .filter((t) => (!helpers.containsBadge(t)))
         .head()
         .content
-      );
-    })(tree),
-    lead: (tokens => {
-      return(
+      )
+    )(_.cloneDeep(tree)),
+    lead: (tokens => (
       _(tokens)
         .filterByType('paragraph')
-        .stripBadges()
+        .filter((t) => (!helpers.containsBadge(t)))
         .head()
         .content
-      );
-    })(tree)
+      )
+    )(_.cloneDeep(tree)),
+    badges: (tokens => (
+      _(tokens)
+        .filterByType('paragraph')
+        .filter(helpers.containsBadge)
+        .map((t) => t.content)
+        .join('')
+      )
+    )(_.cloneDeep(tree)),
   };
 
   console.log(JSON.stringify(obj, null, 2));
