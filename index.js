@@ -46,28 +46,40 @@ module.exports = function(source) {
   const obj = {
     title: (tokens => (
       _(tokens)
+        // explict chaining because of .head()
+        .chain()
         .filterByType('heading')
         .filter(t => !helpers.containsBadge(t))
         .head()
-        .content
+        .getContent()
       )
     )(_.cloneDeep(tree)),
     lead: (tokens => (
       _(tokens)
+        .chain()
         .filterByType('paragraph')
         .filter(t => !helpers.containsBadge(t))
         .head()
-        .content
+        .getContent()
       )
     )(_.cloneDeep(tree)),
     badges: (tokens => (
       _(tokens)
         .filterByType('paragraph')
         .filter(helpers.containsBadge)
-        .map(t => t.content)
+        .getContent()
         .join('')
       )
     )(_.cloneDeep(tree)),
+    images: {
+      logo:(tokens => (
+        _(tokens)
+          .chain()
+          .find(t => new RegExp('logo', 'i').test(t.content))
+          .getContent()
+        )
+      )(_.cloneDeep(tree))
+    },
   };
 
   console.log(JSON.stringify(obj, null, 2));
