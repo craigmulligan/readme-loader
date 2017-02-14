@@ -18,7 +18,7 @@ was written correctly and much more.
 
 [**Download**][etcher] | [**Support**][SUPPORT] | [**Documentation**][USER-DOCUMENTATION] | [**Contributing**][CONTRIBUTING] | [**Roadmap**][milestones] | [**CLI**][CLI]
 
-![Etcher](https://raw.githubusercontent.com/resin-io/etcher/master/screenshot.png)
+![Logo](https://raw.githubusercontent.com/resin-io/etcher/master/screenshot.png)
 
 Installers
 ----------
