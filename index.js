@@ -77,6 +77,15 @@ module.exports = function(source) {
           .chain()
           .find(t => new RegExp('logo', 'i').test(t.content))
           .getContent()
+          .getUrl()
+        )
+      )(_.cloneDeep(tree)),
+      screenshot:(tokens => (
+        _(tokens)
+          .chain()
+          .find(t => new RegExp('screenshot', 'i').test(t.content))
+          .getContent()
+          .getUrl()
         )
       )(_.cloneDeep(tree))
     },
