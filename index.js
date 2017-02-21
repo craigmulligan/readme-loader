@@ -9,6 +9,7 @@ const loaderUtils = require('loader-utils');
 const helpers = require('./lib/helpers');
 const filter = require("lodash/filter");
 const _ = require('./lib/lodash');
+const checks = require('./lib/checks');
 
 /**
 * @summary Parses a readme source into object
@@ -49,24 +50,26 @@ module.exports = function(source) {
         // explict chaining because of .head()
         .chain()
         .filterByType('heading')
-        .filter(t => !helpers.containsBadge(t))
+        .filter(t => !helpers.tokenContains(t, checks.badges))
         .head()
         .getContent()
+        .value()
       )
     )(_.cloneDeep(tree)),
     lead: (tokens => (
       _(tokens)
         .chain()
         .filterByType('paragraph')
-        .filter(t => !helpers.containsBadge(t))
+        .filter(t => !helpers.tokenContains(t, checks.badges))
         .head()
         .getContent()
+        .value()
       )
     )(_.cloneDeep(tree)),
     badges: (tokens => (
       _(tokens)
         .filterByType('paragraph')
-        .filter(helpers.containsBadge)
+        .filter(t => helpers.tokenContains(t, checks.badges))
         .getContent()
         .join('')
       )
@@ -78,6 +81,7 @@ module.exports = function(source) {
           .find(t => new RegExp('logo', 'i').test(t.content))
           .getContent()
           .getUrl()
+          .value()
         )
       )(_.cloneDeep(tree)),
       screenshot:(tokens => (
@@ -86,12 +90,16 @@ module.exports = function(source) {
           .find(t => new RegExp('screenshot', 'i').test(t.content))
           .getContent()
           .getUrl()
+          .value()
         )
       )(_.cloneDeep(tree))
     },
+    installation: helpers.contentByTitle(_.cloneDeep(tree), checks.installation),
+    features: helpers.contentByTitle(_.cloneDeep(tree), checks.features),
+    contribute: helpers.contentByTitle(_.cloneDeep(tree), checks.contribute),
+    license: helpers.contentByTitle(_.cloneDeep(tree), checks.license),
   };
 
-  console.log(JSON.stringify(obj, null, 2));
-
-  return 'module.exports = ' + JSON.stringify(obj);
+  console.log(JSON.stringify(helpers.renderToHtml(obj), null, 2));
+  return 'module.exports = ' + JSON.stringify(helpers.renderToHtml(obj));
 };
